@@ -1,5 +1,4 @@
-#!/Users/yuzhang/anaconda/bin/python
-
+#!/Users/yuzhang/anaconda/envs/py3/bin/python
 import argparse
 
 parser = argparse.ArgumentParser()
@@ -23,7 +22,7 @@ for idx, line in enumerate(file_in):
 box = [float(i) for i in line.split()]
 delta = args.surfc*box[0]*box[1]/len(hidx)*2*6.2415
 file_in.close()
-print delta
+print(delta)
 
 pos = open('GPO.itp', 'w')
 neg = open('GNE.itp', 'w')
