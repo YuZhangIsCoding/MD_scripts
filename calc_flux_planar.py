@@ -1,8 +1,7 @@
 #!/Users/yuzhang/anaconda/bin/python
 # Filename: calc_density_planar_iter.py
-# Description: This is a python script to get the density profiles of a channel simulation
-# Dates:    10-08-2015 Created
-#           02-05-2015 Modified to split the trajectory by chunks to save memory
+# Description: This is a python script to calculate the flux across a interface
+# Dates:    08-08-2017 Created
 
 import mdtraj as md
 import numpy as np

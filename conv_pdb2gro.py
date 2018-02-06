@@ -1,6 +1,6 @@
 #!/Users/yuzhang/anaconda/bin/python
 # Filename: conv_pdb2gro.py
-# Description: This is python script to convert a pdb file to gro file
+# Description: This is a python script to convert a pdb file to gro file
 # Date: 02-15-2016 Make this script executable
 
 import sys

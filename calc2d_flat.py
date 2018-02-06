@@ -1,5 +1,4 @@
 #!/Users/yuzhang/anaconda/bin/python
-import pdb
 import mdtraj as md
 import numpy as np
 import time

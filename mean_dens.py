@@ -1,8 +1,9 @@
 #!/Users/yuzhang/anaconda/envs/py3/bin/python
-#Filename: mean_dens.py
-#Description: This is a python script to get the mean number density profile at central (specified) region
-#Date: 02-15-2016 Created
-
+# Filename: mean_dens.py
+# Description:  This is a python script to get the mean number density profile at central (specified) region
+#               If number density (.txt) file is input, the averaged number density will be output
+#               If mass density (.xvg) file is input, please also indicate the molar mass for each group
+# Date:     02-15-2016  Created 
 import numpy as np
 import sys, os
 import calc_common as comm
@@ -14,7 +15,7 @@ if not os.path.isfile(file_name):
 if comm.args.bound != None:
     bound = [float(i) for i in comm.args.bound]
 else:
-    bound = [float(i) for i in raw_input('Please input the boundary of interest').split()]
+    bound = [float(i) for i in input('Please input the boundary of interest').split()]
 if len(bound)%2 != 0:
     sys.exit('Exit: boundary not recognized')
 
@@ -35,7 +36,7 @@ if file_name.endswith('.xvg'):
     if comm.args.mmass != None:
         mmass = comm.args.mmass
     else:
-        mmass = [float(i) for i in raw_input('Please input the molar mass for %d group(s):' %(len(data[0][0])-1)).split()]
+        mmass = [float(i) for i in input('Please input the molar mass for %d group(s):' %(len(data[0][0])-1)).split()]
     if len(mmass) != len(data[0][0])-1:
         sys.exit('Exit: please input the exact number of molmasses for the groups selected!')
     for i in range(int(len(bound)/2)):

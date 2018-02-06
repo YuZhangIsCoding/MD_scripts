@@ -1,4 +1,6 @@
 #!/Users/yuzhang/anaconda/envs/py3/bin/python
+# This is a file that just to produce quick looks at the data from command line
+# Most files I deal with are txt and xvg files
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt

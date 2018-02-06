@@ -1,4 +1,4 @@
-#!/Users/yuzhang/anaconda/bin/python
+#!/Users/yuzhang/anaconda/envs/py3/bin/python
 # Filename: mod_graphene_charge.py
 # Description:  This is a python script that modifies the surface charge density
 #               of graphene sheets. It contains 3 types: GPH, GPO and GNE, each

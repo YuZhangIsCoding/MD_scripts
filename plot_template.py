@@ -1,8 +1,9 @@
+# This is a python script that makes big plots
 import matplotlib.pyplot as plt
 import numpy as np
 
 fig = plt.figure(figsize = (16,12), dpi = 300)
-fsize = 28
+fsize = 36
 lwidth = 4.0
 msize = 16.0
 # setting color cycle for the plots automatically
