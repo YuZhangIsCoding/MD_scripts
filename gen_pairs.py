@@ -3,7 +3,6 @@
 # Description: This is a python script to generate the cross LJ interaction parameters, knowing the parameters for the pure atoms
 # Date: 02-24-2016 Created
 
-import numpy as np
 import argparse, os, sys
 
 parser = argparse.ArgumentParser(description = 'User specificed filenames')
