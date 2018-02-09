@@ -1,12 +1,8 @@
-#!/usr/bin/python
+#!/Users/yuzhang/anaconda/envs/py3/bin/python
 # Filename: gen_ndoped_quaternary.py
-# This is a script rewrite to generate the .gro file and .itp file for ndoped graphene layers.
+# This is a script rewrite to generate the .gro file and .itp file for n-doped graphene layers.
 # The type of N here is quaternary, which meeans N substitude the C in the hexagonal ring.
 # Date created: 06-10-2015
-
-# dimensions
-import pdb
-import numpy as np
 
 # Modify the percentage here
 unit = [2, 4]

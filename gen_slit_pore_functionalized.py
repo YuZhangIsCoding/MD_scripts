@@ -1,11 +1,13 @@
-#!/usr/bin/python
+#!/Users/yuzhang/anaconda/envs/py3/bin/python
 # Filename: gen_slit_pore_functionalized.py
-# This script is to generate functionlized slit pore systems. The outer-most layer has dimensions of 28*28*16,
-# and the smallest unit cell is 4*4, so the percentage of the functional group (here just use hydroxyl group) is 6.25% or several times it.
-# Date: 6-1-2015
+# This script is to generate functionlized slit pore systems. 
+# The outer-most layer has dimensions of 28*28*16,
+# and the smallest unit cell is 4*4, so the percentage of 
+# the functional group (here just use hydroxyl group) is 6.25% or 
+# several times of it.
+# Date: 6-1-2015 Created
 
 import numpy as np
-import pdb
 
 ############ Functions ###########
 
@@ -54,7 +56,7 @@ def gen_functionalized(l, h):
 def gen_circle(pstart, lx, ly, lz, myfile, gtype, symm_choice):
     '''Generate a circle of graphene sheets'''
 
-    print 'Input circle size:',lx,ly,lz
+    print('Input circle size:',lx,ly,lz)
     nx = int(np.floor(lx/bondlen/3*2))+1
     ny = int(np.ceil(ly/bondlen/3**0.5))*2
     nz = int(np.floor(lz/bondlen/3*2))
@@ -76,9 +78,9 @@ def gen_circle(pstart, lx, ly, lz, myfile, gtype, symm_choice):
             else:
                 x_real = bondlen+min(lframe[-1][0],lframe[-2][0])+bondlen*2
         else:
-            print 'Functionalization type unknown'
+            print('Functionalization type unknown')
         dx = lx-x_real
-        print '\tdx',dx
+        print('\tdx',dx)
         if dx > 2*bondlen:
             nx += 1
         else:
@@ -92,15 +94,15 @@ def gen_circle(pstart, lx, ly, lz, myfile, gtype, symm_choice):
             vframe, vfframe, vfspot = gen_functionalized(nz, ny)
             lz_real = max(vframe[-1][0],vframe[-2][0])
         else:
-            print 'Functionalization type unknown'
+            print('Functionalization type unknown')
         dz = lz-lz_real
-        print '\tdz',dz
+        print('\tdz',dz)
         if dz > 2*bondlen:
             nz += 1
         else:
             break
     
-    print 'Real row and column numbers:', nx-2, ny, nz
+    print('Real row and column numbers:', nx-2, ny, nz)
     for i, item in enumerate(lframe):
         if i in lfspot:
             myfile.write("%5d%-5s%5s%5d%8.3f%8.3f%8.3f\n" %(1,'GPH', 'COH',1,pstart[0]+item[0]+bondlen+dx/2,item[1],pstart[1]+item[2]))

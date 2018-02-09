@@ -2,6 +2,7 @@
 # Filename: calc_msd.py
 # Description: This is a python script to calculate the MSD and diffusion coefficients using Einstein equation in select region
 #              Since ions selected in specific dimension won't accross the boundary, some correction for periodicity can be negelected
+#               Every iteration of the frame will do a boundary check to see if ion still remains.
 # Dates:    09-29-2016 Created
 
 import mdtraj as md

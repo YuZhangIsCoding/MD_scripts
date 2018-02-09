@@ -3,8 +3,10 @@
 # Description:  This is a python script to calculate the MSD and diffusion coefficients using Einstein equation
 #               To calculate the diffusion coefficients, this script used the initial coordinate of a particle
 #               to assign its box
-# Dates:    09-20-2016 Created
-#           03-30-2017 Modified the code so that different molecules can use different corresponding different boxes
+# Dates:    09-20-2016  Created
+#           03-30-2017  Modified the code so that different molecules can use different corresponding different boxes
+#                       And the selection is only done for the first frame. The selected molecules will be assigned as
+#                       target molecules.
 
 import mdtraj as md
 import numpy as np

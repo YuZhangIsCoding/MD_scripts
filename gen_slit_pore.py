@@ -1,4 +1,4 @@
-#!/Users/yuzhang/anaconda/bin/python
+#!/Users/yuzhang/anaconda/envs/py3/bin/python
 import numpy as np
 
 ############ Functions ###########
@@ -24,7 +24,7 @@ def gen_frame(l,h,stype):
 def gen_circle(pstart, lx, ly, lz, myfile):
     '''Generate a circle of graphene sheets'''
 
-    print 'Dimensions:',lx,ly,lz
+    print('Dimensions:',lx,ly,lz)
     nx = int(np.floor(lx/bondlen/3*2))+1
     ny = int(np.ceil(ly/bondlen/3**0.5))*2
     nz = int(np.floor(lz/bondlen/3*2))
@@ -37,27 +37,27 @@ def gen_circle(pstart, lx, ly, lz, myfile):
         else:
             x_real = (1+min(lframe[-1][0],lframe[-2][0])+2)*bondlen
         dx = lx-x_real
-        print 'x_real',x_real
-        print 'dx',dx
+        print('x_real',x_real)
+        print('dx',dx)
         if dx > 2*bondlen:
             nx += 1
         else:
             break
-    print 'Real length of y direction:', (lframe[-1][1]+3**0.5/2)*bondlen
+    print('Real length of y direction:', (lframe[-1][1]+3**0.5/2)*bondlen)
     
     # Left and right sheets
     while True:
         vframe= gen_frame(nz, ny, 1)
         lz_real = max(vframe[-1][0],vframe[-2][0])*bondlen
         dz = lz-lz_real
-        print 'lz_real',lz_real
-        print 'dz',dz
+        print('lz_real',lz_real)
+        print('dz',dz)
         if dz > 2*bondlen:
             nz += 1
         else:
             break
     
-    print 'Real dimension numbers:', nx-2, ny, nz
+    print('Real dimension numbers:', nx-2, ny, nz)
     for i, item in enumerate(lframe):
         myfile.write("%5d%-5s%5s%5d%8.3f%8.3f%8.3f\n" %(1,'GPH', 'CG',i+1,pstart[0]+(item[0]+1)*bondlen+dx/2,item[1]*bondlen,pstart[1]))
     for i, item in enumerate(lframe):
@@ -86,7 +86,7 @@ n_total = 0
 n_total += gen_circle([0, 0], lx, ly, lz, myfile)
 n_total += gen_circle([0.341, 0.341], lx-0.682, ly, lz-0.682, myfile)
 n_total += gen_circle([0.682, 0.682], lx-0.682*2, ly, lz-0.682*2, myfile)
-print 'Total number of atoms:', n_total
+print('Total number of atoms:', n_total)
 
 myfile.write("%10.5f%10.5f%10.5f" %(lx ,10 ,lz))
 myfile.close()

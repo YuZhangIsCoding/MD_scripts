@@ -160,7 +160,7 @@ def gen_icosphere(subdivide = 0, radius = 1):
     return Vertex.get_coords(verts)
 
 def gen_uvsphere(radius = 1, slices = 30):
-    '''The UV sphere will be created by loop sliced theta and phi
+    '''The UV sphere will be created by looping over sliced theta and phi
     '''
     coords = []
     for theta in np.linspace(0, np.pi, slices+1):

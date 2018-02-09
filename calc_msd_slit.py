@@ -1,6 +1,9 @@
 #!/Users/yuzhang/anaconda/bin/python
 # Filename: calc_msd.py
-# Description: This is a python script to calculate the MSD and diffusion coefficients using Einstein equation
+# Description:  This is a python script to calculate the MSD and diffusion coefficients using Einstein equation
+#               For the slit geometry, because some of the ions will come and go, so a list of ions that always
+#               stay need first to be generated, and the res_targ will be replaced by the selected mols from 
+#               the input file.
 # Dates:    09-20-2016 Created
 #           01-17-2017 Changed with nframe/2 origins
 

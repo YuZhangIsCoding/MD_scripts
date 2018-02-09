@@ -1,4 +1,5 @@
-#!/Users/yuzhang/anaconda/bin/python
+#!/Users/yuzhang/anaconda/envs/py3/bin/python
+# generates a full mesh grid defined the input dimensions and spacing
 import argparse
 import numpy as np
 
