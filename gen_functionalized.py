@@ -1,4 +1,4 @@
-#!/Users/yuzhang/anaconda/bin/python
+#!/Users/yuzhang/anaconda/envs/py3/bin/python
 # Filename: gen_functionalized.py
 # Description: This is a python script that creates the configuration file 
 # Date: 03-02-2016 Created
@@ -168,9 +168,8 @@ itpfile.write('[ dihedrals ]\n')
 dih = []
 for i in range(len(indx)):
     for j in [side[i], up[i], down[i]]:
-        if j in indx:
-            if min(indx[i], j) not in dih:
-                print indx[i], j
-                dih.append(min(indx[i], j))
+        if j in indx and min(indx[i], j) not in dih:
+            print indx[i], j
+            dih.append(min(indx[i], j))
 grofile.close()
 itpfile.close()

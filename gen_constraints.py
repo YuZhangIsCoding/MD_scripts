@@ -1,4 +1,4 @@
-#!/usr/bin/python/
+#!/Users/yuzhang/anaconda/envs/py3/bin/python
 # Filename: gen_constraints.py
 # Description: This is a python script to generate the constraints for gold atoms
 # Date: 10-22-2015 Created
@@ -10,7 +10,7 @@ if '-i' in sys.argv:
     temp = sys.argv.index('-i')+1
     groname = sys.argv[temp]
 else:
-    groname = raw_input('Please input the configuration file (.gro):\n')
+    groname = input('Please input the configuration file (.gro):\n')
 
 grofile = open(groname, 'r')
 coord = []

@@ -1,4 +1,5 @@
-#!/Users/yuzhang/anaconda/bin/python
+#!/Users/yuzhang/anaconda/envs/py3/bin/python
+# Use python to automatically generate config files for pmf
 
 import argparse, os
 import numpy as np
@@ -10,9 +11,7 @@ parser.add_argument('-dt', type = float, help = 'time step between each frame')
 args = parser.parse_args()
 
 for i, time in enumerate(np.arange(args.begin, args.end+args.dt, args.dt)):
-    #script = "[atomselect top \"x>20 and x<100\"] writexyz %03d.xyz\nquit\n" %(i+1)
     script = "[atomselect top \"x>210 and x<290\"] writexyz %03d.xyz\nquit\n" %(i+1)
-    #script = "[atomselect top all] writexyz %03d.xyz\nquit\n" %(i+1)
     myfile = open('writexyz.tcl', 'w')
     myfile.write(script)
     myfile.close()
