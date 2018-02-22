@@ -1,4 +1,4 @@
-#!/Users/yuzhang/anaconda/bin/python
+#!/Users/yuzhang/anaconda/envs/py3/bin/python
 # Filename: calc_msd.py
 # Description:  This is a python script to calculate the MSD and diffusion coefficients using Einstein equation
 #               For the slit geometry, because some of the ions will come and go, so a list of ions that always
@@ -38,24 +38,24 @@ xyz_pre = comm.calc_xyz_com(res_targ, traj0, topology, para)
 xyz_ref = []
 xyz_ref.append(xyz_pre)
 per = [[ np.zeros((len(xyz_pre[i]), 3))] for i in range(len(xyz_pre))]
-sd = [[[] for row in range(nframe-nframe/2+1)] for i in range(len(res_targ))]
-for chunk_index, traj in enumerate(md.iterload(traj_name, chunk = chunk_size, top = 'topol.pdb')):
+sd = [[[] for row in range(nframe-nframe//2+1)] for i in range(len(res_targ))]
+for chunk_index, traj in enumerate(md.iterload(traj_name, chunk = chunk_size, top = 'begin.gro')):
     for sub_ind, frame in enumerate(traj):
         frame_ind = chunk_index*chunk_size+sub_ind
         if frame_ind == 0:
             continue
         box = frame.unitcell_lengths[0, :]
         xyz_com = comm.calc_xyz_com(res_targ, frame, topology, para)
-        if frame_ind < nframe/2:
+        if frame_ind < nframe//2:
             xyz_ref.append(xyz_com)
             p_start = 0
             p_end = frame_ind
-        elif nframe-nframe/2-frame_ind >= 0:
+        elif nframe-nframe//2-frame_ind >= 0:
             p_start = 0
-            p_end = nframe/2
+            p_end = nframe//2
         else:
-            p_start = frame_ind-nframe+nframe/2
-            p_end = nframe/2
+            p_start = frame_ind-nframe+nframe//2
+            p_end = nframe//2
         for res_ind, xyz_res in enumerate(xyz_com):
             per[res_ind].append(per[res_ind][-1].copy())
             for dim in range(3):
@@ -70,16 +70,16 @@ for chunk_index, traj in enumerate(md.iterload(traj_name, chunk = chunk_size, to
                 sd[res_ind][frame_ind-loop_ind].append(np.sum(disp**2))
         xyz_pre = xyz_com
         if sub_ind%10 == 9:
-            print 'Reading chunk', chunk_index+1, 'and frame',chunk_index*chunk_size+sub_ind+1
+            print('Reading chunk', chunk_index+1, 'and frame',chunk_index*chunk_size+sub_ind+1)
 #    if chunk_index == 9:
 #        break
 
-time = np.arange(nframe-nframe/2+1)*dt
+time = np.arange(nframe-nframe//2+1)*dt
 data = time.copy()
-pt_start = len(time)/2
+pt_start = len(time)//2
 msd = []
 
-print 'frames read:', chunk_index*chunk_size+sub_ind+1
+print('frames read:', chunk_index*chunk_size+sub_ind+1)
 for i, item in enumerate(sd):
     sd[i][0] = 0
     msd.append([])
@@ -87,7 +87,7 @@ for i, item in enumerate(sd):
         msd[-1].append(np.mean(j))
     msd[i] = np.array(msd[i])/len(res_targ[i])
     coef = np.polyfit(time[pt_start:], msd[i][pt_start:], 1)
-    print coef/4/1e6
+    print(coef/4/1e6)
     fit = np.poly1d(coef)
     plt.plot(time, msd[i], label = str(i))
     plt.plot(time, fit(time), '--', label = 'fit'+str(i))
