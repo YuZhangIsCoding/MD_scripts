@@ -1,15 +1,16 @@
 #!/Users/yuzhang/anaconda/envs/py3/bin/python
+# Distribute net charge densities evenly on all atoms on the surface.
 
 import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-s', dest = 'surfc', default = 0, type = float, help = 'Surface charge density')
 parser.add_argument('-i', '--input', dest = 'filename', default = 'graphene_funct.itp', help = 'itp file for the neutral graphene sheet')
-#parser.add_argument('-u', '--unit', dest = 'unit', default = [24, 36, 24], narg = '*', help = 'deminsion of the oxidized graphene')
+parser.add_argument('-u', '--unit', dest = 'unit', default = [24, 36, 24], narg = '*', help = 'deminsion of the oxidized graphene')
 parser.add_argument('-b', '--bond', dest = 'bond', default = 0.142, help = 'bondlength of C-C')
 args = parser.parse_args()
-unit = [24, 36, 24]
 
+unit = args.unit
 delta = args.surfc*unit[0]*unit[1]*3/4*3**0.5/(unit[0]*unit[1]+2*unit[2])*6.242*args.bond**2
 print(delta)
 
