@@ -1,10 +1,12 @@
-#!/Users/yuzhang/anaconda/bin/python
+#!/Users/yuzhang/anaconda/envs/py3/bin/python
 # Filename: cv_fitting_raw.py
 # Description:  This is a python script to fit the sigma-potential curve with polynomial
 #               This script is built on the base of cv_fitting.py but uses different data structrue
 #               The input data should start from pzc to charged system:
-#               0.00 ... ...
-#               0.01 ... ...    
+#               charge  pos.    neg.
+#               0.00    ...     ...
+#               0.01    ...     ...    
+#               ...
 # Date: 05-30-2017 Created
 
 import argparse, sys
@@ -13,7 +15,6 @@ import matplotlib.pyplot as plt
 fsize = 28
 lwidth = 4.0
 msize = 12
-
 
 parser = argparse.ArgumentParser(description = 'User specified filenames, etc.')
 parser.add_argument('-i', '--input', dest = 'filename', default = 'cv.txt', help = 'Filename for sigma and potential data')
@@ -36,9 +37,9 @@ if args.type == 2:
 elif args.type == 1:
     sigma = data[:, 0]
     pot = data[:, 1]-data[0, 1]
-    print data[np.argsort(data[:, 0])]
+    print(data[np.argsort(data[:, 0])])
 else:
-    sys.exit('Exit: type not recognized!')
+    raise NotImplementedError()
 
 fig, (ax1, ax2) = plt.subplots(2, sharex = True, figsize = (16, 12), dpi = 1000) 
 ax1.plot(pot, sigma, 'o', markersize = msize, label = 'raw data')
@@ -55,9 +56,8 @@ for i in range(3, 7):
     dc.append(100*df(np.sort(pot)))
     ax1.plot(p_fit, sigma_fit, '-',linewidth = lwidth, label = str(i)+' fitting')
     ax2.plot(np.sort(pot), dc[-1], '-o', linewidth = lwidth, markersize = msize,label = str(i)+' fitting')
-#    print 100*(f(pot[-1])-f(pot[2]))/(pot[-1]-pot[2])
     for j in range(len(args.pot)/2):
-        print 'Potential from %.2f to %.2f V:' %(args.pot[2*j], args.pot[2*j+1]), 100*(f(args.pot[2*j+1])-f(args.pot[2*j]))/(args.pot[2*j+1]-args.pot[2*j])
+        print('Potential from %.2f to %.2f V:' %(args.pot[2*j], args.pot[2*j+1]), 100*(f(args.pot[2*j+1])-f(args.pot[2*j]))/(args.pot[2*j+1]-args.pot[2*j]))
 ax1.legend(fontsize = 28, frameon = False, numpoints = 1, bbox_to_anchor = [1, 0.7])
 ax1.set_ylabel('Surface charge density\n($\mathregular{C/m^2\!}$)', fontsize = fsize)
 ax2.legend(fontsize = 28, frameon = False, numpoints = 1, bbox_to_anchor = [1, 0.5])
@@ -75,7 +75,7 @@ fmt = ['%12.4f' for row in range(1+len(dc))]
 dc = np.transpose(np.array(dc))
 np.savetxt(outname+'.txt', np.column_stack((np.sort(pot), dc)), fmt = fmt)
 
-if args.nrun != None:
+if args.nrun:
     fig = plt.figure(figsize = (16, 12), dpi = 1000) 
     pot_avg = []
     dc_avg = []
