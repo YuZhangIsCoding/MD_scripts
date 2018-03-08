@@ -75,7 +75,7 @@ global bondlen
 bondlen = 0.142 # Specify the bond length for graphene
 
 # Lengths for the out circle
-lx = 12
+lx = 10
 ly = 4
 lz = 3.5
 myfile = open('slit_out.gro','w')

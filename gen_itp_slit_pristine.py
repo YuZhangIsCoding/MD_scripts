@@ -4,6 +4,7 @@
 # and the smallest unit cell is 4*4, so the percentage of the functional group (here just use hydroxyl group) is 6.25% 
 
 import numpy as np
+import calc_common as comm
 
 ############ Functions ###########
 
@@ -179,7 +180,10 @@ global atom_num
 global surc
 bondlen = 0.142 # Specify the bond length for graphene
 unit = [4, 4] # Repeat unit for functional groups
-surc = float(input('Please specify the surface charge density (e/nm^2):\n'))
+if comm.args.sc:
+    surc = comm.args.sc
+else:
+    surc = float(input('Please specify the surface charge density (uC/nm^2):\n'))
 
 # Lengths for the out circle
 lx = 10
