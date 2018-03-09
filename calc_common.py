@@ -48,7 +48,11 @@ parser.add_argument('-wg', '--wallgroup', dest = 'wallgroup', nargs = '*', help 
 parser.add_argument('-dt', '--dt', dest = 'dt', type = float, default = 2, help = 'The timestep for each trajectory frame')
 parser.add_argument('-sub', '--subplots', dest = 'sub', action = 'store_true', help = 'subplots for each data set')
 parser.add_argument('-v', action = 'store_true', help = 'show the details of calculation')
-args = parser.parse_args()
+try:
+    __IPYTHON__
+    args = parser.parse_args(['-i', 'traj_comp.xtc', '--exb', '1.018', '-g', '4', '5', '-c', '0.7'])
+except NameError:
+    args = parser.parse_args()
 direction = args.direction
 bin_size = args.bin_size
 dt = args.dt

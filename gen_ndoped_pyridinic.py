@@ -1,3 +1,4 @@
+#!/Users/yuzhang/anaconda/bin/python
 # python script that generates pyridinic N doped graphene
 # dimensions
 import numpy as np

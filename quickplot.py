@@ -13,7 +13,7 @@ if args.filename.endswith('.txt'):
     try:
         data = np.loadtxt(args.filename)
     except:
-        df = pd.read_cvs(args.filename, header = None)
+        df = pd.read_csv(args.filename, header = None)
         data = df.values
 elif args.filename.endswith('.xvg'):
     data = comm.load_xvg(args.filename)

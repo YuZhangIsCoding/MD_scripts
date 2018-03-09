@@ -11,7 +11,12 @@ import argparse
 parser = argparse.ArgumentParser(description = 'Specify some parameters')
 parser.add_argument('-b', '--begin', type = int, default = 0, help = 'The starting frame')
 parser.add_argument('-v', action = 'store_true', help = 'Show the details')
-args = parser.parse_args()
+parser.add_argument('-bs', type = float, default = 0.1, help = 'bin size')
+try:
+    __IPYTHON__
+    args = parser.parse_args([])
+except NameError:
+    args = parser.parse_args()
 
 grid = pd.read_csv('gridElectrode1.dat', skiprows = 1, names = ['x', 'y', 'z'], sep = '\s+')
 
@@ -34,17 +39,21 @@ pot_com['std'] = pot_com.iloc[:, :-1].std(axis = 1)
 pot_avg = pot_com[['avg', 'std']]*0.010364272
 if args.v:
     print('Total frames:', int(len(pot_raw)/tot))
+    print('Select from frame %d' %args.begin)
+    print('Bin size for slicing: %.3f nm' %args.bs)
     print('The potentials for anode and cathode are:')
 print(pot_avg[:half]['avg'].mean(), pot_avg[half:]['avg'].mean())
 
-bin_size = 0.05
-pot_avg['hist_x'] = np.floor(grid.x/bin_size)*bin_size
-pot_avg['hist_y'] = np.floor(grid.y/bin_size)*bin_size
-pot_avg['hist_z'] = np.floor(grid.z/bin_size)*bin_size
+pot_avg['hist_x'] = np.floor(grid.x/args.bs)*args.bs
+pot_avg['hist_y'] = np.floor(grid.y/args.bs)*args.bs
+pot_avg['hist_z'] = np.floor(grid.z/args.bs)*args.bs
 
-groupz = pot_avg.groupby('hist_z')['avg']
-temp = pd.concat((groupz.mean(), groupz.std()), axis = 1)
-temp.to_csv('pot_z.txt', float_format = '%12.6f', header = False)
+groupz1 = pot_avg[:half].groupby('hist_z')['avg']
+temp = pd.concat((groupz1.mean(), groupz1.std()), axis = 1)
+temp.to_csv('pot_z_pos.txt', float_format = '%12.6f', header = False)
+groupz1 = pot_avg[half:].groupby('hist_z')['avg']
+temp = pd.concat((groupz1.mean(), groupz1.std()), axis = 1)
+temp.to_csv('pot_z_neg.txt', float_format = '%12.6f', header = False)
 
 groupx1 = pot_avg[:half].groupby('hist_x')['avg']
 temp = pd.concat((groupx1.mean(), groupx1.std()), axis = 1)

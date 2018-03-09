@@ -78,8 +78,12 @@ def append_OH(gframe, df):
         for j in range(3):
             fframe[0][i, j] = gframe[j][tuple(item[:2])]
             fframe[1][i, j] = gframe[j][tuple(item[:2])]
+        acoh = 120
         fframe[0][i, 2] += item[2]*bco
-        fframe[1][i, 0] += boh*np.cos(acoh/180*np.pi)
+        incre = boh*np.cos(acoh/180*np.pi)
+        theta = np.random.rand()*2*np.pi
+        fframe[1][i, 0] += incre*np.sin(theta)
+        fframe[1][i, 1] += incre*np.cos(theta)
         fframe[1][i, 2] = fframe[0][i, 2] + item[2]*boh*np.sin(acoh/180*np.pi)
     return fframe
 
@@ -169,7 +173,7 @@ dih = []
 for i in range(len(indx)):
     for j in [side[i], up[i], down[i]]:
         if j in indx and min(indx[i], j) not in dih:
-            print indx[i], j
+            print(indx[i], j)
             dih.append(min(indx[i], j))
 grofile.close()
 itpfile.close()

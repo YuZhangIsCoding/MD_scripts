@@ -6,7 +6,7 @@
 
 # Modify the percentage here
 unit = [2, 4]
-repeat = [7, 6]
+repeat = [20, 20]
 l = unit[0]*repeat[0]
 h = unit[1]*repeat[1]
 
@@ -17,7 +17,7 @@ e0 = 0.160217657
 zgap = 4.53
 
 # Inputs
-sigma = input('Please input the surface charge(C/m^2):\n')
+sigma = float(input('Please input the surface charge(C/m^2):\n'))
 
 delta = sigma*area/e0/(unit[0]*unit[1]*repeat[0]*repeat[1])
 
