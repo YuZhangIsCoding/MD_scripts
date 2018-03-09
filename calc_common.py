@@ -603,7 +603,7 @@ def calc_xyz_com(res_targ, frame, topology, para):
     xyz_com = [[] for row in range(len(res_targ))]
     para_res = [[] for row in range(len(res_targ))]
     for res_type, res_list in enumerate(res_targ):
-        if res_list == []:
+        if not len(res_list):
             continue
         for atom in topology.residue(res_list[0]).atoms:
             para_res[res_type].append(para[atom.name][:2])
