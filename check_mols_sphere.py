@@ -2,7 +2,6 @@
 import mdtraj as md
 import matplotlib.pyplot as plt
 import numpy as np
-
 import calc_common as comm
 
 traj_name, traj0, topology = comm.load_traj()
@@ -10,7 +9,10 @@ para = comm.load_para()
 res_targ, res_name = comm.select_groups(traj0)
 massind, chargeind = comm.load_atomic(res_targ, topology, para)
 
-center = (4.48300466, 4.48300138, 4.48199593)
+if comm.args.center:
+    center = comm.args.center
+else:
+    center = (4.48300466, 4.48300138, 4.48199593)
 
 res_targ = np.array(res_targ)
 if comm.args.v:
@@ -19,7 +21,8 @@ if comm.args.v:
     print('Cut off distance from surface:', comm.args.cutoff)
     print('Final molecules are writing to file %s...' %"mol_remain.txt")
 
-chunk_size = 100
+chunk_size = comm.args.chunk
+
 for chunk_index, traj in enumerate(md.iterload(traj_name, chunk_size, top= 'begin.gro')):
     for sub_ind, frame in enumerate(traj):
         mol_rem = [[] for _ in res_targ]
@@ -33,8 +36,11 @@ for chunk_index, traj in enumerate(md.iterload(traj_name, chunk_size, top= 'begi
         if comm.args.v and sub_ind%10 == 9: 
             print('Molecules remained:', [len(i) for i in res_targ], end = ", ")
             print('Reading chunk', chunk_index+1, 'and frame',chunk_index*chunk_size+sub_ind+1)
-    if chunk_index == 0:
-        break
+        if comm.args.test and comm.args.test == sub_ind+chunk_index*chunk_size:
+            break
+    else:
+        continue
+    break
 
 np.savetxt('mol_remain.txt', res_targ, fmt = '%s')
 outfile = open('mol_remain.txt', 'w')

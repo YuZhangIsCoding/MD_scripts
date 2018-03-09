@@ -21,36 +21,38 @@ import matplotlib.pyplot as plt
 ########## Self ###########
 ## Use argparse module to handle multiple command line input for single option!
 parser = argparse.ArgumentParser(description = 'User specified filenames, boundaries, etc.')
-parser.add_argument('--aname', dest = 'aname', nargs = '*', help = 'Atom name for the angle vector')
-parser.add_argument('--atom', dest = 'atom', type = int, help = 'Atom index, starting from 1')
+parser.add_argument('-aname', nargs = '*', help = 'Atom name for the angle vector')
+parser.add_argument('-atom', type = int, help = 'Atom index, starting from 1')
 parser.add_argument('-b', '--bound', dest = 'bound', nargs = '*', type = float, help = 'Boundary of interest')
 parser.add_argument('-bs', '--bin_size', dest = 'bin_size', type = float, default = 0.01, help = 'Bin size, default is 0.01')
-parser.add_argument('-c', '--cutoff', dest = 'cutoff', type = float, default = 1.1, help = 'Cut-off distance for nonbonded interaction, default is 1.1')
+parser.add_argument('-cutoff', dest = 'cutoff', type = float, default = 1.1, help = 'Cut-off distance for nonbonded interaction, default is 1.1')
+parser.add_argument('-center', type = float, nargs = 3, help = 'The coordinates of center')
+parser.add_argument('-chunk', type = int, default = 100, help = 'chunk size of trajectory loaded each time')
 parser.add_argument('-et', '--energytype', dest = 'et', nargs = '*', help = 'Select the type of non-bonded energy of interest')
-parser.add_argument('--exb', dest = 'exb', type = float, default = 0.682, help = 'The thickness of electrode')
+parser.add_argument('-exb', type = float, default = 0.682, help = 'The thickness of electrode')
 parser.add_argument('-d', '--direction', dest = 'direction', type = int, choices = range(3), default = 2, help = 'Direction of profile, default in Z direction')
-parser.add_argument('--delimiter', default = ' ', help = 'Delimiter for loading data')
-parser.add_argument('-dim', '--dimennsion', dest = 'dim', nargs = '*', type = float, help = 'Dimension of the simulation box')
+parser.add_argument('-delimiter', default = ' ', help = 'Delimiter for loading data')
+parser.add_argument('-dim', nargs = '*', type = float, help = 'Dimension of the simulation box')
 parser.add_argument('-g', '--group', dest = 'group', nargs = '*', help = 'Group of interest')
 parser.add_argument('-i', '--input', dest = 'filename', default = 'traj.trr', help = 'Filename for the trajectory, default is traj.trr')
 parser.add_argument('-mm', '--molmass', dest = 'mmass', nargs = '*', type = float, help = 'The molar mass of moleculars of interest')
-parser.add_argument('--nframe', dest = 'nframe', type = int, default = 0, help = 'The total number of frames')
-parser.add_argument('-q', dest = 'q', type = float, default = 2, help = 'The jump length considered mobile (default 2 angstrom)')
-parser.add_argument('-rev', '--reverse', dest = 'rev', action = 'store_true', help = 'reverse charged states')
+parser.add_argument('-nframe', type = int, default = 0, help = 'The total number of frames')
+parser.add_argument('-q', type = float, default = 2, help = 'The jump length considered mobile (default 2 angstrom)')
+parser.add_argument('--rev', dest = 'rev', action = 'store_true', help = 'reverse charged states')
 parser.add_argument('--showgroups', dest = 'showgroups', action = 'store_true', help = 'Show the groups of the system')
-parser.add_argument('--suffix', dest = 'suffix', type = str, help = 'Suffix after each output file')
-parser.add_argument('--scale', dest = 'scale', type = float, nargs = '*', help = 'Select the region you want for the fitting')
-parser.add_argument('--scharge', '-sc', dest = 'sc', type = float, default = 0, help = 'surface charge density')
-parser.add_argument('--skip', dest = 'skip', type = int, default = 1, help = 'Only calculate only nr-th frame')
+parser.add_argument('-suffix', type = str, help = 'Suffix after each output file')
+parser.add_argument('-scale', type = float, nargs = '*', help = 'Select the region you want for the fitting')
+parser.add_argument('-sc', type = float, default = 0, help = 'surface charge density')
+parser.add_argument('-skip', type = int, default = 1, help = 'Only calculate only nr-th frame')
 parser.add_argument('-t', '--temperature', dest = 'temperature', type = float, default = 298, help = 'Temperature of the system')
-parser.add_argument('--test', action = 'store_true', help = 'Test the code or not, default is false')
+parser.add_argument('-test', type = int, default = 0, help = 'test the first few frames')
 parser.add_argument('-wg', '--wallgroup', dest = 'wallgroup', nargs = '*', help = 'Group for the electrode')
-parser.add_argument('-dt', '--dt', dest = 'dt', type = float, default = 2, help = 'The timestep for each trajectory frame')
-parser.add_argument('-sub', '--subplots', dest = 'sub', action = 'store_true', help = 'subplots for each data set')
-parser.add_argument('-v', action = 'store_true', help = 'show the details of calculation')
+parser.add_argument('-dt', type = float, default = 2, help = 'The timestep for each trajectory frame')
+parser.add_argument('--sub', action = 'store_true', help = 'subplots for each data set')
+parser.add_argument('--v', action = 'store_true', help = 'show the details of calculation')
 try:
     __IPYTHON__
-    args = parser.parse_args(['-i', 'traj_comp.xtc', '--exb', '1.018', '-g', '4', '5', '-c', '0.7'])
+    args = parser.parse_args(['-i', 'test.xtc', '-exb', '1.018', '-g', '4', '5', '-c', '0.7', '-dt', '10'])
 except NameError:
     args = parser.parse_args()
 direction = args.direction
@@ -783,7 +785,7 @@ def sort_data(data):
     return data
 
 ########## Self_2 ############
-if args.showgroups == True:
+if args.showgroups:
     traj_name, traj0, topology = load_traj()
     temp = '0\tALL'
     print('Groups in the system:\n',temp)
