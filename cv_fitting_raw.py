@@ -56,13 +56,13 @@ for i in range(3, 7):
     dc.append(100*df(np.sort(pot)))
     ax1.plot(p_fit, sigma_fit, '-',linewidth = lwidth, label = str(i)+' fitting')
     ax2.plot(np.sort(pot), dc[-1], '-o', linewidth = lwidth, markersize = msize,label = str(i)+' fitting')
-    for j in range(len(args.pot)/2):
+    for j in range(len(args.pot)//2):
         print('Potential from %.2f to %.2f V:' %(args.pot[2*j], args.pot[2*j+1]), 100*(f(args.pot[2*j+1])-f(args.pot[2*j]))/(args.pot[2*j+1]-args.pot[2*j]))
 ax1.legend(fontsize = 28, frameon = False, numpoints = 1, bbox_to_anchor = [1, 0.7])
-ax1.set_ylabel('Surface charge density\n($\mathregular{C/m^2\!}$)', fontsize = fsize)
+ax1.set_ylabel('Surface charge density\n($\mathregular{C/m^2}$)', fontsize = fsize)
 ax2.legend(fontsize = 28, frameon = False, numpoints = 1, bbox_to_anchor = [1, 0.5])
 ax2.set_xlabel('Potential (V)', fontsize = fsize)
-ax2.set_ylabel('Differential capacitance\n($\mathregular{\mu F/cm^2\!}$)', fontsize = fsize)
+ax2.set_ylabel('Differential capacitance\n($\mathregular{\mu F/cm^2}$)', fontsize = fsize)
 for axis in fig.axes:
     axis.tick_params(labelsize = fsize, width = 2, length = 6, pad = 10)
     for direction in ['top', 'bottom', 'left', 'right']:

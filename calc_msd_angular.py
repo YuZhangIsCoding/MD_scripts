@@ -1,4 +1,4 @@
-#!/Users/yuzhang/anaconda/envs/py3/bin/python
+#!/Users/yuzhang/anaconda3/bin/python
 import matplotlib.pyplot as plt
 import mdtraj as md
 import numpy as np
@@ -28,7 +28,9 @@ if comm.args.center:
 else:
     center = (4.48300466, 4.48300138, 4.48199593)
 
+#chunk_size = min(100, np.ceil(nframe/10).astype(int))
 chunk_size = min(100, nframe//10)
+total_chunks = np.ceil(nframe/chunk_size).astype(int)
 period = [[0 for i in j] for j in res_targ]
 r_ref = []
 ad = [[[] for row in range(nframe-nframe//2+1)] for i in range(len(res_targ))]
@@ -66,7 +68,7 @@ for chunk_index, traj in enumerate(md.iterload(traj_name, chunk = chunk_size, to
         if comm.args.test and comm.args.test == frame_ind:
             break
     else:
-        print('\r|'+u"\u2588"*(chunk_index+1)+' '*(nframe//chunk_size-chunk_index)+'|', end = '\r')
+        print('\r|'+u"\u2588"*(chunk_index+1)+' '*(total_chunks-chunk_index-1)+'| %2d%%' %((chunk_index+1)*100/total_chunks), end = '\r')
         continue
     break
 
@@ -80,8 +82,8 @@ for i, item in enumerate(ad):
 data = np.column_stack((np.arange(nframe-nframe/2+1)*dt, np.array(amsd).T))
 np.savetxt(outname+'.txt', data, fmt = ['%12.6f' for i in range(len(data[0]))])
 
-plt.plot(data[:, 0], data[:, 1])
-plt.plot(data[:, 0], data[:, 2])
+for i in range(1, len(data[0])):
+    plt.plot(data[:, 0], data[:, i])
 plt.xlabel('ps')
 plt.ylabel('$\mathregular{rad^2}$')
 plt.savefig(outname+'.pdf')

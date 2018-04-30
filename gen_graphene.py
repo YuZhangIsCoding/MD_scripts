@@ -1,4 +1,4 @@
-#!/Users/yuzhang/anaconda/envs/py3/bin/python
+#!/Users/yuzhang/anaconda3/bin/python
 # This is a python script that generates the coordinate file for graphene sheets.
 # For MD simulations, graphene is usually modeled as an infinite plane. Due to 
 # the periodic boundary conditions, the number of points in each edge must be

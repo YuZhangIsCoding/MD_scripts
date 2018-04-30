@@ -1,11 +1,10 @@
-#!/Users/yuzhang/anaconda/envs/py3/bin/python
+#!/Users/yuzhang/anaconda3/bin/python
 # Filename: check_mols_sphere.py
 # Description:  A python script that compute the remaining ions in the cutoff
 #               distance from a spherical surface
 # Date:     03-09-2018  Created
 
 import mdtraj as md
-import matplotlib.pyplot as plt
 import numpy as np
 import calc_common as comm
 

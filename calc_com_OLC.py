@@ -1,4 +1,4 @@
-#!/Users/yuzhang/anaconda/envs/py3/bin/python 
+#!/Users/yuzhang/anaconda3/bin/python
 # Filename:     calc_com_OLC.py
 # Description:  This is a python script that calculates the center of mass
 #               coordinates of onion like carbon in an supercapacitor

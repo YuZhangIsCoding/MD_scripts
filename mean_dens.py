@@ -1,4 +1,4 @@
-#!/Users/yuzhang/anaconda/envs/py3/bin/python
+#!/Users/yuzhang/anaconda3/bin/python
 # Filename: mean_dens.py
 # Description:  This is a python script to get the mean number density profile at central (specified) region
 #               If number density (.txt) file is input, the averaged number density will be output

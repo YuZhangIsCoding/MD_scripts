@@ -1,4 +1,4 @@
-#!/Users/yuzhang/anaconda/bin/python
+#!/Users/yuzhang/anaconda3/bin/python
 # Filename: combine_gro.py
 # This is a python script to combine .gro files and assort residue
 # Date: 05-20-2015

@@ -1,4 +1,4 @@
-#!/Users/yuzhang/anaconda/envs/py3/bin/python
+#!/Users/yuzhang/anaconda3/bin/python
 # Filename: gen_graphene_edges.py
 # Description:  A python script that generates the coordinate file for graphene
 #               edge planes, including armchair and zigzag. This script will 
