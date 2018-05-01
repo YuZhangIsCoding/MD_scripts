@@ -79,7 +79,9 @@ class TAA(object):
                     Hname = 'H1'
                 else:
                     Hname = 'HC'
-                    if i == 1:
+                    if i == 1 and n == 2:
+                        Cname = 'CE'
+                    elif i == 1:
                         Cname = 'C2'
                     elif i == n-1:
                         Cname = 'CT'
@@ -117,7 +119,9 @@ class TAA(object):
                 if i != bond[1] and j != bond[0] and i != j: # avoid triangle loop like cyclopropane
                     self.dihedrals.append((i, bond[0], bond[1], j))
     def write_itp(self, para, filename = 'TAA.itp'):
-        '''write all atoms to an itp file'''
+        '''write all atoms to an itp file.
+        Atom types and bonded information from OPLS-AA JACS 121 (1999) 4827
+        '''
         myfile = open(filename, 'w')
         myfile.write('[ moleculetype ]\n')
         myfile.write('%s\t3\n' %self.name)
@@ -125,7 +129,13 @@ class TAA(object):
         myfile.write('[ atoms ]\n')
         for i in range(1, self.get_number()+1):
             atomname = self.atoms[i].name
-            myfile.write('%5d%5s%5d%5s%5s%5d%12.4f%12.4f\n' %(i, atomname, 1, self.name, atomname[0]+str(i),
+            if atomname[0] == 'N':
+                atomtype = 'NT'
+            elif atomname[0] == 'C':
+                atomtype = 'CT'
+            elif atomname[0] == 'H':
+                atomtype = 'HC'
+            myfile.write('%5d%5s%5d%5s%5s%5d%12.4f%12.4f\n' %(i, atomtype, 1, self.name, atomname[0]+str(i),
                                         self.atoms[i].cgroup, para[atomname][0], para[atomname][1]))
         
         myfile.write('[ bonds ]\n')
@@ -142,13 +152,16 @@ class TAA(object):
         myfile.close()
         
 ## main ##
+
+## nonbonded parameters from OPLS-AA JPCB 108 (2004) 16893
 para = {'N3': (0.12, 14.007),
         'C1': (-0.17, 12.011),
         'H1': (0.13, 1.008),
         'C2': (0.01, 12.011),
         'CS': (-0.12, 12.011),
         'CT': (-0.18, 12.011),
-        'HC': (0.06, 1.008)
+        'HC': (0.06, 1.008),
+        'CE': (-0.05, 12.011)
        }
 
 Atom.clear_index()
