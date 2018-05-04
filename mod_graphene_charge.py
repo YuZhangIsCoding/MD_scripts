@@ -1,4 +1,4 @@
-#!/Users/yuzhang/anaconda/envs/py3/bin/python
+#!/Users/yuzhang/anaconda3/bin/python
 # Filename: mod_graphene_charge.py
 # Description:  This is a python script that modifies the surface charge density
 #               of graphene sheets. It contains 3 types: GPH, GPO and GNE, each
@@ -10,12 +10,13 @@ import argparse
 
 parser = argparse.ArgumentParser(description = 'specify inputs')
 parser.add_argument('-sc', dest = 'sc', default = 0, type = float, help = 'surface charge density (C/m^2)')
+parser.add_argument('-o', '--output', dest = 'output', default = 'graphene_charge.itp', help = 'output filename')
 args = parser.parse_args()
 
 bondlen = 0.142
 delta = args.sc*bondlen**2*3*3**(0.5)/4*10/1.602
 
-myfile = open('graphene_charge.itp', 'w')
+myfile = open(args.output, 'w')
 myfile.write('[ moleculetype ]\n\
 GPH   1\n\
 [ atoms ]\n\

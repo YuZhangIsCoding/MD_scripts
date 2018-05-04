@@ -148,7 +148,8 @@ class TAA(object):
             
         myfile.write('[ dihedrals ]\n')
         for dih in self.dihedrals:
-            myfile.write('%5d%5d%5d%5d%5d\n' %(dih+(1,)))
+            ## RD dihedrals
+            myfile.write('%5d%5d%5d%5d%5d\n' %(dih+(3,))) 
         myfile.close()
         
 ## main ##
