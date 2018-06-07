@@ -1,4 +1,4 @@
-#!/Users/yuzhang/anaconda/envs/py3/bin/python
+#!/Users/yuzhang/anaconda3/bin/python
 # Filename: gen_functionalized.py
 # Description: This is a python script that creates the configuration file 
 # Date: 03-02-2016 Created
@@ -6,7 +6,7 @@
 import numpy as np
 import argparse
 
-############ bonded parameters ##########
+############ bonded parameters ########## 
 bondlen = 0.142
 bcc = 0.151
 bco = 0.141
@@ -16,7 +16,7 @@ resname = 'GOH'
 
 ############ argparse ###########
 def myinput(inote):
-    temp = raw_input(inote)
+    temp = input(inote)
     return temp.split()
 parser = argparse.ArgumentParser(description = 'parameters for the functionalized carbon layer')
 parser.add_argument('-d', '--dimention', dest = 'dim', nargs = '*', type = int, help = 'dimension of the carbon frame')
@@ -25,16 +25,16 @@ parser.add_argument('-r', '--random', dest = 'random', action = 'store_true', he
 parser.add_argument('-p', '--percent', dest = 'percent', type = float, help = 'percentage of functional groups')
 parser.add_argument('-u', '--unitcell', dest = 'unit', nargs = '*', type = int, help = 'unitcell for regular distributed functionalized graphene')
 parser.add_argument('-g', '--group', dest = 'group', choices = ['H', 'O', 'OH'], help = 'Select the functional group')
-#args = parser.parse_args(['-d', '24', '40', '-r', '-g', 'OH', '-p', '5'])
-args = parser.parse_args(['-d', '48', '80', '-u', '4', '4', '-g', 'OH', '-p', '5'])
+args = parser.parse_args(['-d', '24', '40', '-r', '-g', 'OH', '-p', '2'])
+#args = parser.parse_args(['-d', '48', '80', '-u', '4', '4', '-g', 'OH', '-p', '5'])
 if args.dim == None:
-    temp = raw_input('Please input the dimension for the graphene layer:\n').split()
+    temp = input('Please input the dimension for the graphene layer:\n').split()
     dim = [int(i) for i in temp]
 else:
     dim = args.dim
 groupname = ['pristine', 'H', 'O', 'OH']
 if args.group == None:
-    group = int(raw_input('Please select the functional group:\n\
+    group = int(input('Please select the functional group:\n\
     0.  pristine\n\
     1.  H\n\
     2.  O\n\

@@ -27,7 +27,7 @@ if len(args.mols) != len(args.nums):
 
 outname = args.output
 while os.path.isfile(outname):
-    outname = outname+'.dup...'
+    outname = outname+'.dup'
 
 if args.v:
     print('Reading input file %s...\nWriting to file %s' %(args.input, outname))

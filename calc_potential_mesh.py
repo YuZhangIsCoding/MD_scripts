@@ -1,4 +1,4 @@
-#!/Users/yuzhang/anaconda/envs/py3/bin/python
+#!/Users/yuzhang/anaconda3/bin/python
 # Filename:     calc_potential_mesh.py
 # Description:  This is a python script that calculates the potential on carbon
 #               onion on a two-electrode simulation, based on the mesh method.

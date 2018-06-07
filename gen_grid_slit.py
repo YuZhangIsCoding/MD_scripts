@@ -1,4 +1,4 @@
-#!/Users/yuzhang/anaconda/envs/py3/bin/python
+#!/Users/yuzhang/anaconda3/bin/python
 # Filename:     gen_grid_slit.py
 # Description:  Generate grids on the slit surfaces
 

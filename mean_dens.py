@@ -40,7 +40,7 @@ if file_name.endswith('.xvg'):
     if len(mmass) != len(data[0][0])-1:
         sys.exit('Exit: please input the exact number of molmasses for the groups selected!')
     for i in range(int(len(bound)/2)):
-        print('Mean number density for region %d:' %(i+1), [np.mean(data[i][:, j])/mmass[j-1] for j in range(1,len(data[i][0]))])
+        print('Mean number density for region %d:' %(i+1), [0.6022*np.mean(data[i][:, j])/mmass[j-1] for j in range(1,len(data[i][0]))])
 else:
     for i in range(int(len(bound)/2)):
         print('Mean number density for region %d:' %(i+1), [np.mean(data[i][:, j]) for j in range(1,len(data[i][0]))])
