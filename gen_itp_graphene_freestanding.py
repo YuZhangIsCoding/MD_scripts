@@ -1,6 +1,6 @@
 #!/Users/yuzhang/anaconda3/bin/python
 # Description:  This is a python script that generates itp files for free 
-#               standing graphene. In current code, the graphene is cut to
+#               standing graphene. By default, the graphene is cut to
 #               have zigzag edge.
 
 from itp_common import Atom, Compound
@@ -9,16 +9,19 @@ parser = argparse.ArgumentParser()
 parser.add_argument('-s', '--size', nargs = 2, type = int, 
                     help = 'size of the graphene sheet (carbon atoms in each lateral direction)')
 parser.add_argument('-o', '--output', default = 'graphene.itp', help = 'name of the output file')
+parser.add_argument('-c', '--cut', default = 'zigzag', choices = ('zigzag', 'armchair', 'both', 'none'),
+                    help = 'specify the edges to cut: zigzag, armchair, both or none')
 try:
     __IPYTHON__
     args = parser.parse_args(['-s', '4','4'])
 except NameError:
     args = parser.parse_args()
 class graphene(Compound):
-    def __init__(self, size, name = 'GPH'):
+    def __init__(self, size, cut, name = 'GPH'):
         Atom.clear_index()
         self.size = size
         self.frame = {}
+        self.cut = cut
         super(graphene, self).__init__(name)
     def add_atoms(self):
         for i, j in itertools.product(*[range(_) for _ in self.size]):
@@ -26,14 +29,18 @@ class graphene(Compound):
             atom.assign_cgroup()
             self.atoms[atom.index] = atom
             self.frame[(i, j)] = atom
-            # vertical bonds
-            if j == self.size[1]-1:
-                self.add_bond(atom, self.frame[(i, 0)])
+            # inner bonds
             if j != 0:
                 self.add_bond(atom, self.frame[(i, j-1)])
-            # horizontal bonds
             if i != 0 and ((i%2 == j%2 == 0) or (i%2 == j%2 == 1)):
                     self.add_bond(atom, self.frame[(i-1, j)])
+            # add zigzag bonds or armchair bonds
+            if self.cut == 'zigzag' or self.cut == 'none':
+                if j == self.size[1]-1:
+                    self.add_bond(atom, self.frame[(i, 0)])
+            if self.cut == 'armchair' or self.cut == 'none':
+                if i ==0 and j%2 == 0:
+                    self.add_bond(atom, self.frame[(self.size[0]-1, j)])
     def _add_improper_dihedrals(self):
         for atom in self.atoms.values():
             if len(atom.neighbors) == 3:
@@ -43,5 +50,5 @@ class graphene(Compound):
         self.add_angles()
         self.add_dihedrals(improper = True)
     
-temp = graphene(size = args.size)
+temp = graphene(args.size, args.cut)
 temp.write_itp(para = {'CG': (0.0153333, 12.011)}, filename = args.output)
