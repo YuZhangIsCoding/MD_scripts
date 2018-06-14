@@ -11,6 +11,7 @@ parser.add_argument('-s', '--size', nargs = 2, type = int,
 parser.add_argument('-o', '--output', default = 'graphene.itp', help = 'name of the output file')
 parser.add_argument('-c', '--cut', default = 'zigzag', choices = ('zigzag', 'armchair', 'both', 'none'),
                     help = 'specify the edges to cut: zigzag, armchair, both or none')
+parser.add_argument('--charge', default = 0, type = float, help = 'partial charge on carbon')
 try:
     __IPYTHON__
     args = parser.parse_args(['-s', '4','4'])
@@ -51,4 +52,4 @@ class graphene(Compound):
         self.add_dihedrals(improper = True)
     
 temp = graphene(args.size, args.cut)
-temp.write_itp(para = {'CG': (0.0153333, 12.011)}, filename = args.output)
+temp.write_itp(para = {'CG': (args.charge, 12.011)}, filename = args.output)

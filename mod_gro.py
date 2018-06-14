@@ -1,4 +1,4 @@
-#!/Users/yuzhang/anaconda/envs/py3/bin/python
+#!/Users/yuzhang/anaconda3/bin/python
 # This is a python script that modifies the box size of a gro file.
 
 import argparse, sys
