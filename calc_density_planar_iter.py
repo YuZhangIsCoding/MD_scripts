@@ -1,4 +1,4 @@
-#!/Users/yuzhang/anaconda/envs/py3/bin/python
+#!/Users/yuzhang/anaconda3/bin/python
 # Filename: calc_density_planar_iter.py
 # Description: This is a python script to get the density profiles of a channel simulation
 # Dates:    10-08-2015 Created
@@ -23,7 +23,7 @@ mass_density = np.zeros(len(distances))
 charge_density = np.zeros(len(distances))
 
 chunk_size = 100
-for chunk_index, traj in enumerate(md.iterload(traj_name, chunk = chunk_size, top = 'topol.pdb')):
+for chunk_index, traj in enumerate(md.iterload(traj_name, chunk = chunk_size, top = 'begin.gro')):
     for sub_ind, frame in enumerate(traj):
         temp, _ = np.histogram(frame.xyz[0, :, direction], weights = massind, bins = np.append(distances, max(distances)+bin_size))
         mass_density += temp

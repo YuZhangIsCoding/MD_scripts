@@ -9,7 +9,7 @@
 #               ...
 # Date: 05-30-2017 Created
 
-import argparse, sys
+import argparse
 import numpy as np
 import matplotlib.pyplot as plt
 fsize = 28
@@ -49,7 +49,6 @@ p_fit = np.linspace(min(pot)-0.1, max(pot)+0.1, 50)
 dc = []
 for i in range(3, 7):
     z = np.polyfit(pot, sigma, i)
-    f = np.poly1d(np.polyfit(pot, sigma, i))
     f = np.poly1d(z)
     df = np.poly1d(z[:-1]*np.arange(len(z)-1, 0, -1))
     sigma_fit = f(p_fit)

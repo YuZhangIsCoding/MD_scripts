@@ -49,5 +49,5 @@ for item in mylist:
     for subitem in item:
         outfile.write('%5d' %(temp+subitem[0])+subitem[1])
     temp += subitem[0]
-outfile.write("%10.5f%10.5f%10.5f" %(0, 0, 0))
+outfile.write("%10.5f%10.5f%10.5f\n" %(0, 0, 0))
 outfile.close()

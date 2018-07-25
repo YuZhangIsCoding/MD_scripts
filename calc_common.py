@@ -52,7 +52,8 @@ parser.add_argument('--sub', action = 'store_true', help = 'subplots for each da
 parser.add_argument('--v', action = 'store_true', help = 'show the details of calculation')
 try:
     __IPYTHON__
-    args = parser.parse_args(['-i', 'test.xtc', '-exb', '1.018', '-g', '4', '5', '-c', '0.7', '-dt', '10'])
+    args = parser.parse_args([])
+    #args = parser.parse_args(['-i', 'test.xtc', '-exb', '1.018', '-g', '4', '5', '-c', '0.7', '-dt', '10'])
 except NameError:
     args = parser.parse_args()
 direction = args.direction
@@ -87,7 +88,7 @@ def load_nonbond():
     nonbond = {}
     temp = 0
     for itp_name in os.listdir('./'):
-        if itp_name.endswith('.itp'):
+        if itp_name.endswith('.itp') or itp_name.endswith('.top'):
             itpfile = open(itp_name, 'r')
             for line in itpfile:
                 if '[' in line and 'atomtypes' in line and ']' in line:
@@ -113,7 +114,7 @@ def load_para():
     nonbond = {}
     temp = 0
     for itp_name in os.listdir('./'):
-        if itp_name.endswith('.itp'):
+        if itp_name.endswith('.itp') or itp_name.endswith('.top'):
             itpfile = open(itp_name, 'r')
             for line in itpfile:
                 if '[' in line and 'atomtypes' in line and ']' in line:
@@ -121,7 +122,7 @@ def load_para():
                     continue
                 elif '[' in line:
                     temp = 0
-                elif line[0] == ';' or line == '\n':
+                elif line[0] in '#;' or line == '\n':
                     continue
                 if temp == 1:
                     entry = line.split()

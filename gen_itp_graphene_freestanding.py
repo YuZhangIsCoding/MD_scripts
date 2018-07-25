@@ -11,14 +11,18 @@ parser.add_argument('-s', '--size', nargs = 2, type = int,
 parser.add_argument('-o', '--output', default = 'graphene.itp', help = 'name of the output file')
 parser.add_argument('-c', '--cut', default = 'zigzag', choices = ('zigzag', 'armchair', 'both', 'none'),
                     help = 'specify the edges to cut: zigzag, armchair, both or none')
-parser.add_argument('--charge', default = 0, type = float, help = 'partial charge on carbon')
+parser.add_argument('--charge', default = 0, type = float, help = 'partial atomic charge on carbon')
+parser.add_argument('-sc', '--surfacecharge', dest = 'sc', type = float, help = 'surface charge density in C/m^2')
+parser.add_argument('-n', '--name', default = 'GPH', help = 'The residue name of graphene')
+
 try:
     __IPYTHON__
     args = parser.parse_args(['-s', '4','4'])
 except NameError:
     args = parser.parse_args()
+
 class graphene(Compound):
-    def __init__(self, size, cut, name = 'GPH'):
+    def __init__(self, size, cut, name):
         Atom.clear_index()
         self.size = size
         self.frame = {}
@@ -50,6 +54,12 @@ class graphene(Compound):
         self.add_atoms()
         self.add_angles()
         self.add_dihedrals(improper = True)
-    
-temp = graphene(args.size, args.cut)
-temp.write_itp(para = {'CG': (args.charge, 12.011)}, filename = args.output)
+
+bondlen = 0.142
+if args.sc:
+    atom_charge = args.sc*bondlen**2*3*3**(0.5)/4*10/1.602
+else:
+    atom_charge = args.charge
+
+temp = graphene(args.size, args.cut, args.name)
+temp.write_itp(para = {'CG': (atom_charge, 12.011)}, filename = args.output)

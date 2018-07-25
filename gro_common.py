@@ -14,10 +14,12 @@ class Gro(object):
         for i, line in enumerate(myfile):
             if i == 1:
                 self.num = int(line)
-            elif i > 1 and len(line) > 31:
+            elif i > 1 and i-2 < self.num:
                 name = line[:20]
                 coords = [float(_) for _ in line[20:44].split()]
                 self.info.append((name, coords))
         self.box = [float(_) for _ in line.split()]
+        while len(self.box) < 9:
+            self.box.append(0)
         myfile.close()
 
