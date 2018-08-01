@@ -37,6 +37,15 @@ pot_com['avg'] = pot_com.mean(axis = 1)
 pot_com['std'] = pot_com.iloc[:, :-1].std(axis = 1)
 
 pot_avg = pot_com[['avg', 'std']]*0.010364272
+# Some mesh points might coincide with the surface atoms (or too close to the 
+# surface atoms), which will induce a very large potential. So avoid this 
+# scenario, here we introduce criteria, and we only select the points that 
+# has the average potential smaller than this criteria. This will give a much
+# reasonable potential of the electrode surface.
+
+cri = 10
+pot_avg = pot_avg[abs(pot_avg['avg'])< cri]
+
 if args.v:
     print('Total frames:', int(len(pot_raw)/tot))
     print('Select from frame %d' %args.begin)
