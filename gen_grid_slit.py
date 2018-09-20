@@ -15,7 +15,7 @@ parser.add_argument('-o', default = 'gridElectrode1.dat', help = 'output filenam
 args = parser.parse_args()
 gridfile = open(args.o, 'w')
 for iind in range(len(args.x)//2):
-    for i in np.arange(int(args.x[2*iind]/args.bs)*args.bs, int(args.x[2*iind+1]/args.bs)*args.bs, args.bs):
+    for i in np.arange(np.round(int(args.x[2*iind]/args.bs)*args.bs, decimals = 1), np.round(int(args.x[2*iind+1]/args.bs)*args.bs, decimals = 1), args.bs):
         for k in args.z:
             for j in np.arange(int(args.y[0]/args.bs)*args.bs, int(args.y[1]/args.bs)*args.bs, args.bs):
                 if args.switch:

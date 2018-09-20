@@ -20,7 +20,7 @@ else:
 myfile = open(args.input, 'r')
 outfile = open(args.output, 'w')
 
-outfile.write('[ moleculetype ]\nMXN\t 3\n[ atoms ]\n')
+outfile.write('[ moleculetype ]\n%s\t 3\n[ atoms ]\n' %args.name)
 count = 0
 for i, line in enumerate(myfile):
     if i > 1:
@@ -49,9 +49,7 @@ for i, line in enumerate(myfile):
             atype = 'HM'
             amass = 1.008
             charge = 0.35
-#            if z > 0.5:
-#                pass
-#                charge += 1/20
-        outfile.write('%5d%5s%5d%5s%5s%5d%12.7f%12.7f\n' %(count, atype, 1, 'MXN', atype, count, charge, amass))
+            charge += delta
+        outfile.write('%5d%5s%5d%5s%5s%5d%12.7f%12.7f\n' %(count, atype, 1, args.name, atype, count, charge, amass))
 outfile.close()
 myfile.close()

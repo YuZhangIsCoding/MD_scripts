@@ -11,6 +11,7 @@ import argparse
 parser = argparse.ArgumentParser(description = 'specify inputs')
 parser.add_argument('-sc', dest = 'sc', default = 0, type = float, help = 'surface charge density (C/m^2)')
 parser.add_argument('-o', '--output', dest = 'output', default = 'graphene_charge.itp', help = 'output filename')
+parser.add_argument('-bc', '--basecharge', dest = 'bc', default = 0, type = float, help = 'base charge for C')
 args = parser.parse_args()
 
 bondlen = 0.142
@@ -25,10 +26,10 @@ GPH   1\n\
 myfile.write('[ moleculetype ]\n\
 GPO   1\n\
 [ atoms ]\n\
-1   CG    1  GPO   CG    1   %12.8f  12.011\n\n' %delta)
+1   CG    1  GPO   CG    1   %12.8f  12.011\n\n' %(delta+args.bc))
 
 myfile.write('[ moleculetype ]\n\
 GNE   1\n\
 [ atoms ]\n\
-1   CG    1  GNE   CG    1   %12.8f  12.011\n\n' %(-delta))
+1   CG    1  GNE   CG    1   %12.8f  12.011\n\n' %(-delta+args.bc))
 myfile.close()

@@ -17,6 +17,18 @@ outfile = open(args.output, 'w')
 outfile.write('[ moleculetype ]\n%s\t 3\n[ atoms ]\n' %args.name)
 count = 0
 
+#c_dict = dict(C = -0.74,
+#        Ti2 = 0.68,
+#        Ti1 = 1.04,
+#        O = -0.64
+#        )
+c_dict = dict(
+        O = -1.137605,
+        Ti1 = 1.929465,
+        C = -1.6701,
+        Ti2 = 1.70338
+        )
+
 if args.sc:
     delta = args.sc*0.30390*0.26319*10/1.602
 else:
@@ -32,19 +44,19 @@ for i, line in enumerate(myfile):
         if 'C' in name:
             amass = 12.011
             atype = 'CM'
-            charge = -0.74
+            charge = c_dict['C']
         count += 1
         if 'Ti' in name:
             atype = 'TiM'
             amass = 47.867
             if z > 0.2 and z < 0.4:
-                charge = 0.68
+                charge = c_dict['Ti2']
             else:
-                charge = 1.04
+                charge = c_dict['Ti1']
         elif 'O' in name:
             atype = 'OM'
             amass = 15.99
-            charge = -0.64
+            charge = c_dict['O']
             charge += delta
         outfile.write('%5d%5s%5d%5s%5s%5d%12.7f%12.5f\n' %(count, atype, 1, args.name, atype, count, charge, amass))
 outfile.close()

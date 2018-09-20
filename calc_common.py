@@ -52,8 +52,8 @@ parser.add_argument('--sub', action = 'store_true', help = 'subplots for each da
 parser.add_argument('--v', action = 'store_true', help = 'show the details of calculation')
 try:
     __IPYTHON__
-    args = parser.parse_args([])
-    #args = parser.parse_args(['-i', 'test.xtc', '-exb', '1.018', '-g', '4', '5', '-c', '0.7', '-dt', '10'])
+    #args = parser.parse_args([])
+    args = parser.parse_args(['-i', 'traj_comp.xtc'])
 except NameError:
     args = parser.parse_args()
 direction = args.direction

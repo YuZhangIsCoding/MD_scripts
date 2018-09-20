@@ -1,4 +1,4 @@
-#!/Users/yuzhang/anaconda/envs/py3/bin/python
+#!/Users/yuzhang/anaconda3/bin/python
 # Filename: cv_fitting_raw.py
 # Description:  This is a python script to fit the sigma-potential curve with polynomial
 #               This script is built on the base of cv_fitting.py but uses different data structrue
@@ -42,7 +42,7 @@ else:
     raise NotImplementedError()
 
 fig, (ax1, ax2) = plt.subplots(2, sharex = True, figsize = (16, 12), dpi = 1000) 
-ax1.plot(pot, sigma, 'o', markersize = msize, label = 'raw data')
+ax1.plot(pot, sigma, 'o', markersize = msize, label = 'raw data', color = 'k')
 
 p_fit = np.linspace(min(pot)-0.1, max(pot)+0.1, 50)
 
@@ -91,7 +91,7 @@ if args.nrun:
         df = np.poly1d(z[:-1]*np.arange(len(z)-1, 0, -1))
         sigma_fit = f(p_fit)
         dc_avg.append(100*df(pot_avg))
-        plt.plot(pot_avg, dc_avg[-1], '-o', linewidth = lwidth, markersize = msize,label = str(i)+' fitting')
+        plt.plot(pot_avg, dc_avg[-1], '-o', linewidth = lwidth, markersize = msize,label = str(i)+' fitting', mfc = 'w')
     for axis in fig.axes:
         axis.tick_params(labelsize = fsize, width = 2, length = 6, pad = 10)
         for direction in ['top', 'bottom', 'left', 'right']:
