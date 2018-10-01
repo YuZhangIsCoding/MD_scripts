@@ -75,9 +75,8 @@ class Gro(object):
         # number under Gro, something like self.typenum
         cnt = 1
         for item in self.info:
-            temp = item[2].strip()
-            if temp not in self.atomtypes:
-                self.atomtypes[temp] = cnt
+            if item[2] not in self.atomtypes:
+                self.atomtypes[item[2]] = cnt
                 cnt += 1
     def check_itp_gro(self):
         '''Check if the number of atoms in gro file is a multiple of
@@ -89,6 +88,6 @@ class Gro(object):
         results = []
         #gro file format '%5d%5s%5s%5d%8.3f%8.3f%8.3f'
         for i in range(4):
-            results.append(string[i*5:(i+1)*5])
+            results.append(string[i*5:(i+1)*5].strip())
         results.extend([float(_) for _ in string[20:44].split()])
         return results
