@@ -13,7 +13,7 @@ parser.add_argument('-g', '--gro', help = 'grofile')
 parser.add_argument('-ff', '--forcefields', nargs = '*', type = str, 
                     help = 'force field and supplementary files')
 parser.add_argument('-o', '--output', default = 'data.lammps', help = 'output file')
-parser.add_argument('-onb', '--nbout', default = 'data.lj', 
+parser.add_argument('--nbout', default = 'data.lj', 
                     help = 'output file for lj parameters')
 parser.add_argument('-kcal', '--kcal', action = 'store_true', help = 'Units for energy')
 try:
@@ -26,11 +26,11 @@ except NameError:
 # for class gro
 gro = Gro()
 gro.load_gro(args.gro)
-gro.load_ff(args.forcefields)
+gro.load_ff(args.forcefields, args.kcal)
 ####
 
 with open(args.output, 'w') as outfile:
-    outfile.write('Generate lammps data file from gromacs file %s and %s\n\n' %(args.gro, args.forcefields))
+    outfile.write('Generate lammps data file from gromacs file %s and force filed files (%s)\n\n' %(args.gro, ', '.join(args.forcefields)))
 
     outfile.write('%10d atoms\n' %(gro.natoms))
     if gro.bonds:
@@ -76,21 +76,23 @@ with open(args.output, 'w') as outfile:
                 %(i+1, i//len(gro.mq)+1, gro.atomtypes[item[2]],
                     gro.mq[i%len(gro.mq)][0], item[-3]*10, item[-2]*10, item[-1]*10))
 
-    outfile.write('\nBonds\n\n')
-    num_per_mol = gro.natoms//gro.nmols
-    cnt = 1
-    for bond in gro.bonds:
-        for i in range(gro.nmols):
-            seq = gro.bondtypes[tuple([gro.info[_-1][2] for _ in bond])][0]
-            outfile.write('{:10d}{:10d}{:10d}{:10d}\n'.format(cnt, seq, *[_+i*num_per_mol for _ in bond]))
-            cnt += 1
+    if gro.bonds:
+        outfile.write('\nBonds\n\n')
+        num_per_mol = gro.natoms//gro.nmols
+        cnt = 1
+        for bond in gro.bonds:
+            for i in range(gro.nmols):
+                seq = gro.bondtypes[tuple([gro.info[_-1][2] for _ in bond])][0]
+                outfile.write('{:10d}{:10d}{:10d}{:10d}\n'.format(cnt, seq, *[_+i*num_per_mol for _ in bond]))
+                cnt += 1
 
-    outfile.write('\nAngles\n\n')
-    cnt = 1
-    for angle in gro.angles:
-        for i in range(gro.nmols):
-            seq = gro.angletypes[tuple([gro.info[_-1][2] for _ in angle])][0]
-            outfile.write('{:10d}{:10d}{:10d}{:10d}{:10d}\n'.format(cnt, seq, *[_+i*num_per_mol for _ in angle]))
+    if gro.angles:
+        outfile.write('\nAngles\n\n')
+        cnt = 1
+        for angle in gro.angles:
+            for i in range(gro.nmols):
+                seq = gro.angletypes[tuple([gro.info[_-1][2] for _ in angle])][0]
+                outfile.write('{:10d}{:10d}{:10d}{:10d}{:10d}\n'.format(cnt, seq, *[_+i*num_per_mol for _ in angle]))
 
                 
 ## add pair_coeffs
