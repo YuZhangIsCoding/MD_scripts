@@ -67,9 +67,19 @@ class Gro(object):
         self.check_itp_gro()
         self.get_atomtypes()
     def load_ff(self, filenames, kcal = True):
-        '''Use generator to loop files and read in itp file, and load mass and 
-        charge infomation such as molar mass, atomic charge, bonds, angles, 
-        dihedrals, etc
+        '''Load molar mass and charge infomation such as molar mass, atomic 
+        charge, bonds, angles, dihedrals, etc.
+
+        This function uses generator to loop files and read in itp files, line
+        by line, and check if a session keyword is in the line. If true, jump
+        to the function that reads that specific session.
+        The benefit of using generator here is that we can process all sessions 
+        by just going through each file only once.
+
+        Additional thoughts: could create a new class say FF that just stores
+        the force field related methods, dictionaries. In the Gro class, we 
+        only need to define self.ff = FF(**args). Something like that. 
+        But gonna just leave it for now.
         '''
         sessions = {
                 'atoms': self.load_mq,
@@ -113,7 +123,7 @@ class Gro(object):
             self.mq.append([float(_) for _ in temp[-2:]])
 
     def load_bondtypes(self, filegen, kcal = True):
-        '''Read lines after [ bonds ]  session and store bondtypes as a 
+        '''Read lines after [ bondtypes ]  session and store bondtypes as a 
         dictionary, where the key is a tuple (bondtype1, bondtype2) and 
         the corresponding value is the a list of [index, k, b]
         Note that each bond connect by 2 different atomtypes will have 2 keys
@@ -141,6 +151,12 @@ class Gro(object):
             self.bonds.append([int(_) for _ in line.split()[:2]])
                     
     def load_angletypes(self, filegen, kcal = True):
+        '''Read lines after [ angletypes ]  session and store bondtypes as a 
+        dictionary, where the key is a tuple (bondtype1, bondtype2) and 
+        the corresponding value is the a list of [index, k, b]
+        Note that each bond connect by 2 different atomtypes will have 2 keys
+        that point to the same list.
+        '''
         for line in filegen:
             if '[' in line and ']' in line:
                 return line
