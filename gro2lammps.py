@@ -51,7 +51,7 @@ with open(args.output, 'w') as outfile:
 
     outfile.write('\nMasses\n\n')
     for atom in gro.atomtypes:
-        outfile.write('%5d%12.5f\n' %(gro.atomtypes[atom], gro.mass[atom]))
+        outfile.write('%5d%12.6f\n' %(gro.atomtypes[atom], gro.mass[atom]))
 
     if gro.bondtypes:
         outfile.write('\nBond Coeffs\n\n')
