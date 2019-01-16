@@ -48,7 +48,7 @@ for chunk_index, traj in enumerate(md.iterload(traj_name, chunk = chunk_size, to
         for ind, item in enumerate(r2d):
             temp, _ = np.histogram(item, bins = np.append(distances, cutoff+2*bin_size))
             cyld[:, ind] += temp/float(count[ind])
-        print 'Reading',chunk_index*chunk_size+sub_ind+1
+        print('Reading',chunk_index*chunk_size+sub_ind+1)
     if comm.args.test == True:
         if chunk_index == 0:
             break

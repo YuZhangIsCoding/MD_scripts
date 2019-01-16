@@ -174,7 +174,7 @@ class LAMMPS(object):
 
             myfile.write('\nAtoms\n\n')
             for item in self.atoms:
-                myfile.write('%5d%5d%5d%12.5f%8.3f%8.3f%8.3f\n' %tuple(item))
+                myfile.write('%8d%8d%5d%12.5f%8.3f%8.3f%8.3f\n' %tuple(item))
 
             for name in self.connections:
                 if self.connections[name]:

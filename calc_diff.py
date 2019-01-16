@@ -47,7 +47,7 @@ for i in range(1, len(msd[0])):
         print(coef[0]/dim/1e6, end = ' ')
     fit = np.poly1d(coef)
     plt.plot(msd[:, 0]/1000, msd[:, i], linewidth = lwidth, label = label_name[i-1], color = colors[i-1])
-#    plt.plot(msd[:, 0]/1000, fit(msd[:, 0]), '--', linewidth = lwidth, label = 'fitting '+label_name[i-1])
+    plt.plot(msd[:, 0]/1000, fit(msd[:, 0]), '--', linewidth = lwidth, label = 'fitting '+label_name[i-1])
 print('')
 plt.legend(loc = 'best', fontsize = fsize, frameon = True, numpoints = 1)
 plt.xlabel('time (ns)', fontsize = fsize)

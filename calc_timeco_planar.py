@@ -79,12 +79,12 @@ for chunk_index, traj in enumerate(md.iterload(traj_name, chunk = chunk_size, to
                 if loop_ind < p_end:
                     tc[i][frame_ind-loop_ind].append(len(temp))
         if sub_ind%10 == 9:
-            print 'Reading chunk', chunk_index+1, 'and frame',chunk_index*chunk_size+sub_ind+1
+            print('Reading chunk', chunk_index+1, 'and frame',chunk_index*chunk_size+sub_ind+1)
     if comm.args.test  and chunk_index == 0:
         break
 
 frames_read = chunk_index*chunk_size+sub_ind+1
-print frames_read
+print(frames_read)
 
 ### The following block is for the cases when ions/solvents leaves the surface cage very rapidly
 ### It takes average of different trajectory chunks
